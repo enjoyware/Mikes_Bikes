@@ -1,0 +1,267 @@
+-- phpMyAdmin SQL Dump
+-- version 4.0.10deb1
+-- http://www.phpmyadmin.net
+--
+-- Host: 127.0.0.1
+-- Generation Time: Feb 15, 2019 at 01:37 AM
+-- Server version: 5.5.57-0ubuntu0.14.04.1
+-- PHP Version: 5.5.9-1ubuntu4.22
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+
+--
+-- Database: `Mikes_Bikes`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `Customers`
+--
+
+CREATE TABLE IF NOT EXISTS `Customers` (
+  `CustomersID` int(11) NOT NULL AUTO_INCREMENT,
+  `Name` varchar(255) DEFAULT NULL,
+  `Address` varchar(255) DEFAULT NULL,
+  `PhoneNumber` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`CustomersID`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1116 ;
+
+--
+-- Dumping data for table `Customers`
+--
+
+INSERT INTO `Customers` (`CustomersID`, `Name`, `Address`, `PhoneNumber`) VALUES
+(1111, 'Sarah Jeffery', '9563 Oak St. Seattle, WA 98108', '555-555-5555'),
+(1112, 'John Halibut', '9855 NW Columbia Ave. Seattle, WA 98108', '555-555-5555'),
+(1113, 'Cam Johnson', '50333 Place Rd. Seattle, WA 98122', '555-555-5555'),
+(1114, 'Jonny Roberson', '4300 Aloha Ave. Shoreline, WA 98155', '555-555-5555'),
+(1115, 'Donna Low', '154478 SW 7th St. Des Monies, WA 98755', '555-555-5555');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `Discounts`
+--
+
+CREATE TABLE IF NOT EXISTS `Discounts` (
+  `DiscountID` int(11) NOT NULL AUTO_INCREMENT,
+  `Disc_Desc` varchar(255) DEFAULT NULL,
+  `Amount` decimal(13,2) DEFAULT NULL,
+  PRIMARY KEY (`DiscountID`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=17 ;
+
+--
+-- Dumping data for table `Discounts`
+--
+
+INSERT INTO `Discounts` (`DiscountID`, `Disc_Desc`, `Amount`) VALUES
+(-75, '75% off blow out sale', '0.75'),
+(-50, '50%off Special', '0.50'),
+(-45, '45%off', '0.45'),
+(-20, '20%off', '0.20'),
+(-15, '15%off', '0.15'),
+(16, 'N/A', '0.00');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `Employees`
+--
+
+CREATE TABLE IF NOT EXISTS `Employees` (
+  `EmployeeID` int(11) NOT NULL AUTO_INCREMENT,
+  `Name` varchar(255) DEFAULT NULL,
+  `Address` varchar(255) DEFAULT NULL,
+  `PhoneNumber` char(255) DEFAULT NULL,
+  `Salary` decimal(13,2) DEFAULT NULL,
+  PRIMARY KEY (`EmployeeID`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8465 ;
+
+--
+-- Dumping data for table `Employees`
+--
+
+INSERT INTO `Employees` (`EmployeeID`, `Name`, `Address`, `PhoneNumber`, `Salary`) VALUES
+(60, 'Eric Hellhole', '5589 17th Ave. S. Seattle, WA 98108', '555-555-5555', '26.00'),
+(144, 'Megan Stromburg ', '1540 13th St. NW. Seattle, WA 98744', '555-555-5555', '25.50'),
+(1774, 'John Benson', '83478 Commet Hill Dr. Seattle, WA 98196', '555-555-5555', '25.50'),
+(6885, 'Chris Jennerson', '7844 Lane St. Renton, WA 98455', '555-555-6699', '25.50'),
+(8464, 'Ashley Bennett', '8744 S Canadoo Pl. Seattle, WA 98102', '555-554-5555', '26.00');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `Maintenance`
+--
+
+CREATE TABLE IF NOT EXISTS `Maintenance` (
+  `MaintenanceID` int(11) NOT NULL AUTO_INCREMENT,
+  `Type` varchar(255) DEFAULT NULL,
+  `Price` decimal(13,2) DEFAULT NULL,
+  `EmployeeID` int(11) NOT NULL,
+  PRIMARY KEY (`MaintenanceID`),
+  KEY `EmployeeID` (`EmployeeID`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=55486 ;
+
+--
+-- Dumping data for table `Maintenance`
+--
+
+INSERT INTO `Maintenance` (`MaintenanceID`, `Type`, `Price`, `EmployeeID`) VALUES
+(1236, 'New Brakes', '59.99', 6885),
+(6522, 'Tune Up', '15.99', 1774),
+(9850, 'Tire Rotation', '20.00', 60),
+(9885, 'New tire tube', '7.99', 60),
+(55484, 'Handlebar Tape', '15.99', 1774),
+(55485, 'N/A', '0.00', 60);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `Orders`
+--
+
+CREATE TABLE IF NOT EXISTS `Orders` (
+  `OrderID` int(11) NOT NULL AUTO_INCREMENT,
+  `EmployeeID` int(11) NOT NULL,
+  `CustomersID` int(11) NOT NULL,
+  `Price` decimal(13,2) DEFAULT NULL,
+  `OrderDate` date DEFAULT NULL,
+  `CustomerAddress` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`OrderID`),
+  KEY `EmployeeID` (`EmployeeID`),
+  KEY `CustomersID` (`CustomersID`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+
+--
+-- Dumping data for table `Orders`
+--
+
+INSERT INTO `Orders` (`OrderID`, `EmployeeID`, `CustomersID`, `Price`, `OrderDate`, `CustomerAddress`) VALUES
+(1, 144, 1112, '20.00', '2019-02-14', '9855 NW Columbia Ave. Seattle, WA 98108'),
+(2, 6885, 1111, '17.00', '2019-02-14', '9563 Oak St. Seattle, WA 98108'),
+(3, 60, 1113, '7.99', '2019-02-14', '50333 Place Rd. Seattle, WA 98122'),
+(4, 1774, 1114, '59.99', '2019-02-14', '4300 Aloha Ave. Shoreline, WA 98155'),
+(5, 60, 1115, '15.99', '2019-02-14', '154478 SW 7th St. Des Monies, WA 98755\r\n');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `Products`
+--
+
+CREATE TABLE IF NOT EXISTS `Products` (
+  `ProductID` int(11) NOT NULL AUTO_INCREMENT,
+  `Description` varchar(255) DEFAULT NULL,
+  `Price` decimal(13,2) DEFAULT NULL,
+  `SupplierID` int(11) NOT NULL,
+  PRIMARY KEY (`ProductID`),
+  KEY `SupplierID` (`SupplierID`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=885 ;
+
+--
+-- Dumping data for table `Products`
+--
+
+INSERT INTO `Products` (`ProductID`, `Description`, `Price`, `SupplierID`) VALUES
+(124, 'tire air covers', '3.99', 456),
+(363, 'Blue kids helmet', '24.99', 4455),
+(465, 'Tire  Tube', '15.99', 169),
+(663, 'red grip tape', '15.99', 456),
+(884, 'gray grip tape', '16.99', 456);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `SalesDetails`
+--
+
+CREATE TABLE IF NOT EXISTS `SalesDetails` (
+  `ProductID` int(11) NOT NULL,
+  `OrderID` int(11) NOT NULL,
+  `DiscountID` int(11) NOT NULL,
+  `MaintenanceID` int(11) NOT NULL,
+  KEY `ProductID` (`ProductID`),
+  KEY `OrderID` (`OrderID`),
+  KEY `DiscountID` (`DiscountID`),
+  KEY `MaintenanceID` (`MaintenanceID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `SalesDetails`
+--
+
+INSERT INTO `SalesDetails` (`ProductID`, `OrderID`, `DiscountID`, `MaintenanceID`) VALUES
+(124, 1, 16, 55485),
+(363, 2, -15, 55485),
+(465, 3, 16, 9885),
+(663, 4, 16, 55484),
+(884, 5, -20, 55484);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `Suppliers`
+--
+
+CREATE TABLE IF NOT EXISTS `Suppliers` (
+  `SupplierID` int(11) NOT NULL AUTO_INCREMENT,
+  `Vendors` varchar(255) DEFAULT NULL,
+  `OrderDescription` varchar(255) DEFAULT NULL,
+  `Price` decimal(13,2) DEFAULT NULL,
+  PRIMARY KEY (`SupplierID`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4456 ;
+
+--
+-- Dumping data for table `Suppliers`
+--
+
+INSERT INTO `Suppliers` (`SupplierID`, `Vendors`, `OrderDescription`, `Price`) VALUES
+(169, 'Bikebike', '20 tire tubes', '80.00'),
+(456, 'Bike Supply', '10 white cork handlebar tape - 20\r\n10 gray cork handlebar tape - 20\r\n10 red cork handlebar tape - 20\r\n25 air covers - 24.75', '85.00'),
+(999, 'Bike 2 GO', '15 1.5 inch road tires\r\n15 2 inch road tires ', '750.00'),
+(4455, 'Gear Heads', '5 Black Bell Helmets\r\n2 blue kids helmets\r\n2 pink kids helmets', '63.52');
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `Maintenance`
+--
+ALTER TABLE `Maintenance`
+  ADD CONSTRAINT `Maintenance_ibfk_1` FOREIGN KEY (`EmployeeID`) REFERENCES `Employees` (`EmployeeID`);
+
+--
+-- Constraints for table `Orders`
+--
+ALTER TABLE `Orders`
+  ADD CONSTRAINT `Orders_ibfk_1` FOREIGN KEY (`EmployeeID`) REFERENCES `Employees` (`EmployeeID`),
+  ADD CONSTRAINT `Orders_ibfk_2` FOREIGN KEY (`CustomersID`) REFERENCES `Customers` (`CustomersID`);
+
+--
+-- Constraints for table `Products`
+--
+ALTER TABLE `Products`
+  ADD CONSTRAINT `Products_ibfk_1` FOREIGN KEY (`SupplierID`) REFERENCES `Suppliers` (`SupplierID`);
+
+--
+-- Constraints for table `SalesDetails`
+--
+ALTER TABLE `SalesDetails`
+  ADD CONSTRAINT `SalesDetails_ibfk_1` FOREIGN KEY (`ProductID`) REFERENCES `Products` (`ProductID`),
+  ADD CONSTRAINT `SalesDetails_ibfk_2` FOREIGN KEY (`OrderID`) REFERENCES `Orders` (`OrderID`),
+  ADD CONSTRAINT `SalesDetails_ibfk_3` FOREIGN KEY (`DiscountID`) REFERENCES `Discounts` (`DiscountID`),
+  ADD CONSTRAINT `SalesDetails_ibfk_4` FOREIGN KEY (`MaintenanceID`) REFERENCES `Maintenance` (`MaintenanceID`);
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
